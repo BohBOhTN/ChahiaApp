@@ -14,7 +14,8 @@ const Sale = sequelize.define('Sale', {
         references: {
             model: Client,
             key: 'client_id'
-        }
+        },
+        onDelete: 'SET NULL'
     },
     product_id: {
         type: DataTypes.INTEGER,
@@ -22,7 +23,8 @@ const Sale = sequelize.define('Sale', {
         references: {
             model: Product,
             key: 'product_id'
-        }
+        },
+        onDelete: 'RESTRICT'
     },
     quantity: {
         type: DataTypes.DECIMAL(10, 2),
@@ -40,7 +42,8 @@ const Sale = sequelize.define('Sale', {
     },
     total_price: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: false
+        allowNull: false,
+        defaultValue: sequelize.literal('quantity * unit_price')
     },
     payment_method: {
         type: DataTypes.ENUM('cash', 'credit'),
