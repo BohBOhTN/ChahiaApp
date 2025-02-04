@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const { sequelize } = require('./models/index'); // Corrected file path
+const { sequelize } = require('./models/index'); // Assuming sequelize is exported from models/index.js
 
 app.use(express.json());
 
@@ -12,7 +12,7 @@ const Product = require('./models/Product');
 const Client = require('./models/Client');
 const Purchase = require('./models/Purchase');
 const Sale = require('./models/Sale');
-const CreditPayment = require('./models/CreditPayment'); // Corrected file path
+const CreditPayment = require('./models/CreditPayment');
 const PaymentHistory = require('./models/PaymentHistory');
 const ExpenseCategory = require('./models/ExpenseCategory');
 const Expense = require('./models/Expense');
