@@ -1,25 +1,15 @@
-const User = require('./User');
-const Supplier = require('./Supplier');
-const Product = require('./Product');
-const Client = require('./Client');
-const Purchase = require('./Purchase');
-const Sale = require('./Sale');
-const CreditPayment = require('./CreditPayment');
-const PaymentHistory = require('./PaymentHistory');
-const ExpenseCategory = require('./ExpenseCategory');
-const Expense = require('./Expense');
+const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
-// Define associations here
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres', // Adjust this if using a different database
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
+    },
+    logging: false // Disable logging
+});
 
-module.exports = {
-  User,
-  Supplier,
-  Product,
-  Client,
-  Purchase,
-  Sale,
-  CreditPayment,
-  PaymentHistory,
-  ExpenseCategory,
-  Expense,
-};
+module.exports = { sequelize };
