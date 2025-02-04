@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const ExpenseCategory = require('./ExpenseCategory'); // Import ExpenseCategory model
 
 class Expense extends Model {}
 
@@ -47,5 +48,8 @@ Expense.init({
     tableName: 'expenses',
     timestamps: false
 });
+
+// Define association
+Expense.belongsTo(ExpenseCategory, { foreignKey: 'category_id' });
 
 module.exports = Expense;
