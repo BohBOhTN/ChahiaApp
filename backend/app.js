@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const { sequelize } = require('./models/index'); // Assuming sequelize is exported from models/index.js
+require('dotenv').config(); // Load environment variables
+const sequelize = require('./config/database'); // Updated to use the new database configuration
 
 app.use(express.json());
 

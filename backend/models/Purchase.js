@@ -1,7 +1,5 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const Supplier = require('./Supplier');
-const Product = require('./Product');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database'); // Assuming you have a database configuration file
 
 const Purchase = sequelize.define('Purchase', {
     purchase_id: {
@@ -11,19 +9,11 @@ const Purchase = sequelize.define('Purchase', {
     },
     supplier_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: Supplier,
-            key: 'supplier_id'
-        }
+        allowNull: false
     },
     product_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: Product,
-            key: 'product_id'
-        }
+        allowNull: false
     },
     quantity: {
         type: DataTypes.DECIMAL(10, 2),
@@ -44,7 +34,7 @@ const Purchase = sequelize.define('Purchase', {
         allowNull: false
     },
     payment_method: {
-        type: DataTypes.ENUM('cash', 'credit'),
+        type: DataTypes.STRING,
         allowNull: false
     },
     invoice_number: {
@@ -55,7 +45,7 @@ const Purchase = sequelize.define('Purchase', {
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: Sequelize.NOW
+        defaultValue: DataTypes.NOW
     }
 }, {
     timestamps: false,
