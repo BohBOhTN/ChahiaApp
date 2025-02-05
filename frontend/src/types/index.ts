@@ -47,3 +47,21 @@ export interface CreditPayment {
   status: 'unpaid' | 'partially_paid' | 'paid';
   dueDate: string;
 }
+
+// Mock user data (replace with actual API calls)
+export const mockUsers = [
+  {
+    id: '1',
+    name: 'John Manager',
+    email: 'manager@example.com',
+    role: 'manager',
+    password: 'manager123' // In real app, this would be hashed
+  },
+  {
+    id: '2',
+    name: 'Jane Staff',
+    email: 'staff@example.com',
+    role: 'staff',
+    password: 'staff123' // In real app, this would be hashed
+  }
+] as const;
