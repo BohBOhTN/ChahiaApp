@@ -29,7 +29,10 @@ router.get('/:id', async (req, res) => {
 // Create a new product
 router.post('/', async (req, res) => {
     try {
-        const product = await Product.create(req.body);
+        const product = await Product.create({
+            ...req.body,
+            product_image_link: req.body.product_image_link
+        });
         res.status(201).json(product);
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -39,7 +42,10 @@ router.post('/', async (req, res) => {
 // Update a product by ID
 router.put('/:id', async (req, res) => {
     try {
-        const [updated] = await Product.update(req.body, {
+        const [updated] = await Product.update({
+            ...req.body,
+            product_image_link: req.body.product_image_link
+        }, {
             where: { product_id: req.params.id }
         });
         if (updated) {

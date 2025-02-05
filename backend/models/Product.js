@@ -39,6 +39,10 @@ const Product = sequelize.define('Product', {
             min: 0
         }
     },
+    product_image_link: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
     created_at: {
         type: DataTypes.DATE,
         defaultValue: Sequelize.NOW
