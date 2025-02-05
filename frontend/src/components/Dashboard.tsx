@@ -1,7 +1,7 @@
 import React from 'react';
 import { DollarSign, Package, Users, AlertTriangle } from 'lucide-react';
 
-export default function Dashboard() {
+const Dashboard: React.FC = () => {
   const stats = [
     {
       title: "Today's Sales",
@@ -35,6 +35,7 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
+      <h1>Dashboard</h1>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => (
           <div
@@ -108,4 +109,6 @@ export default function Dashboard() {
       </div>
     </div>
   );
-}
+};
+
+export default Dashboard;

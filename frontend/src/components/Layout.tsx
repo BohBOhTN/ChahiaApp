@@ -1,6 +1,8 @@
 import React from 'react';
 import { Menu, Store, Users, ShoppingCart, CreditCard, BarChart3, LogOut } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useAuth } from '../contexts/AuthContext'; // Import useAuth
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,6 +11,8 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
+  const navigate = useNavigate(); // Initialize useNavigate
+  const { logout } = useAuth(); // Get logout method from AuthContext
 
   const navigation = [
     { name: 'Dashboard', icon: BarChart3, id: 'dashboard' },
@@ -17,6 +21,11 @@ export default function Layout({ children }: LayoutProps) {
     { name: 'Clients', icon: Users, id: 'clients' },
     { name: 'Credit', icon: CreditCard, id: 'credit' },
   ];
+
+  const handleLogout = () => {
+    logout(); // Call logout method
+    navigate('/login'); // Redirect to login page
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -52,7 +61,10 @@ export default function Layout({ children }: LayoutProps) {
         </nav>
 
         <div className="absolute bottom-0 w-full p-4 border-t">
-          <button className="flex items-center w-full px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-md">
+          <button
+            onClick={handleLogout} // Attach logout handler
+            className="flex items-center w-full px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-md"
+          >
             <LogOut className="w-5 h-5 mr-3" />
             Logout
           </button>

@@ -1,9 +1,11 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import Routes and Route
 import { useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout';
 import LoginPage from './components/auth/LoginPage';
 import ManagerDashboard from './components/manager/ManagerDashboard';
 import StaffDashboard from './components/staff/StaffDashboard';
+import Dashboard from './components/Dashboard'; // Import Dashboard
 
 function App() {
   const { user, isLoading } = useAuth();
@@ -17,13 +19,26 @@ function App() {
   }
 
   if (!user) {
-    return <LoginPage />;
+    return (
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<LoginPage />} />
+        </Routes>
+      </Router>
+    );
   }
 
   return (
-    <Layout>
-      {user.role === 'manager' ? <ManagerDashboard /> : <StaffDashboard />}
-    </Layout>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/manager" element={<ManagerDashboard />} />
+          <Route path="/staff" element={<StaffDashboard />} />
+        </Routes>
+      </Layout>
+    </Router>
   );
 }
 
