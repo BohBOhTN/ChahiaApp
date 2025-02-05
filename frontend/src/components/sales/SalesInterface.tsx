@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Search, ShoppingCart, User, X, Plus, Minus } from 'lucide-react';
 import type { Product, Client } from '../../types';
-import { mockProducts, mockClients } from '../../types';
 
 interface CartItem {
   product: Product;
@@ -18,8 +18,30 @@ export default function SalesInterface() {
   const [tempWeight, setTempWeight] = useState<string>('');
   const [showWeightInput, setShowWeightInput] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  const filteredProducts = mockProducts.filter(product =>
+  useEffect(() => {
+    axios.get('http://localhost:3000/products')
+      .then(response => {
+        const fetchedProducts = response.data.map((product: any) => ({
+          id: product.product_id,
+          name: product.name,
+          category: product.category,
+          unitType: product.unit_type,
+          stock: parseFloat(product.stock),
+          avgBuyPrice: parseFloat(product.avg_buy_price),
+          sellPrice: parseFloat(product.sell_price),
+          isPrePacked: false, // Assuming all products are not pre-packed
+          packageSize: 0 // Assuming no package size for simplicity
+        }));
+        setProducts(fetchedProducts);
+      })
+      .catch(error => {
+        console.error('Error fetching products:', error);
+      });
+  }, []);
+
+  const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -98,7 +120,7 @@ export default function SalesInterface() {
   };
 
   const formatPrice = (price: number) => {
-    return `$${price.toFixed(2)}`;
+    return `$${(price || 0).toFixed(2)}`;
   };
 
   const handleCheckout = () => {

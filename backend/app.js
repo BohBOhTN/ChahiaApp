@@ -1,10 +1,12 @@
 require('dotenv').config(); // Load environment variables at the top
 
 const express = require('express');
+const cors = require('cors'); // Import cors
 const app = express();
 const port = 3000;
 const sequelize = require('./config/database'); // Updated to use the new database configuration
 
+app.use(cors({ origin: 'http://localhost:5173' })); // Enable CORS for the specified origin
 app.use(express.json());
 
 // Import models

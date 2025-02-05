@@ -2,6 +2,7 @@ import React from 'react';
 import { Menu, Store, Users, ShoppingCart, CreditCard, BarChart3, LogOut } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext'; // Import useAuth
+import SalesInterface from './sales/SalesInterface'; // Import SalesInterface
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -12,7 +13,7 @@ export default function Layout({ children }: LayoutProps) {
   const [activeTab, setActiveTab] = useState('dashboard');
   const { user, logout } = useAuth(); // Get user and logout method from AuthContext
 
-  const navigation = [
+  const managerNavigation = [
     { name: 'Dashboard', icon: BarChart3, id: 'dashboard' },
     { name: 'Inventory', icon: Store, id: 'inventory' },
     { name: 'Sales', icon: ShoppingCart, id: 'sales' },
@@ -20,9 +21,32 @@ export default function Layout({ children }: LayoutProps) {
     { name: 'Credit', icon: CreditCard, id: 'credit' },
   ];
 
+  const staffNavigation = [
+    { name: 'Sales', icon: ShoppingCart, id: 'sales' },
+  ];
+
   const handleLogout = () => {
     logout(); // Call logout method
   };
+
+  const renderNavigation = (navigation) => (
+    <nav className="mt-4">
+      {navigation.map((item) => (
+        <button
+          key={item.id}
+          onClick={() => setActiveTab(item.id)}
+          className={`flex items-center w-full px-4 py-3 text-left ${
+            activeTab === item.id
+              ? 'bg-blue-50 text-blue-600'
+              : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          <item.icon className="w-5 h-5 mr-3" />
+          {item.name}
+        </button>
+      ))}
+    </nav>
+  );
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -40,22 +64,7 @@ export default function Layout({ children }: LayoutProps) {
           </button>
         </div>
         
-        <nav className="mt-4">
-          {navigation.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`flex items-center w-full px-4 py-3 text-left ${
-                activeTab === item.id
-                  ? 'bg-blue-50 text-blue-600'
-                  : 'text-gray-600 hover:bg-gray-50'
-              }`}
-            >
-              <item.icon className="w-5 h-5 mr-3" />
-              {item.name}
-            </button>
-          ))}
-        </nav>
+        {user?.role === 'manager' ? renderNavigation(managerNavigation) : renderNavigation(staffNavigation)}
 
         <div className="absolute bottom-0 w-full p-4 border-t">
           <button
@@ -87,7 +96,7 @@ export default function Layout({ children }: LayoutProps) {
         </header>
 
         <main className="p-6">
-          {children}
+          {user?.role === 'manager' ? children : <SalesInterface />}
         </main>
       </div>
     </div>
