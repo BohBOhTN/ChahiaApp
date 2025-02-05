@@ -5,7 +5,7 @@ export default function Dashboard() {
   const stats = [
     {
       title: "Today's Sales",
-      value: "$24,500",
+      value: "₱24,500",
       icon: DollarSign,
       change: "+12%",
       changeType: "positive"
@@ -26,7 +26,7 @@ export default function Dashboard() {
     },
     {
       title: "Pending Credits",
-      value: "$12,300",
+      value: "₱12,300",
       icon: AlertTriangle,
       change: "-2%",
       changeType: "positive"
@@ -77,7 +77,7 @@ export default function Dashboard() {
                   <p className="text-sm text-gray-500">2 hours ago</p>
                 </div>
                 <div className="text-right">
-                  <p className="font-medium">$1,200</p>
+                  <p className="font-medium">₱1,200</p>
                   <p className="text-sm text-gray-500">5kg Chicken</p>
                 </div>
               </div>
