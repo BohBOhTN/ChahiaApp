@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useAuth } from '../../contexts/AuthContext';
 import { Store } from 'lucide-react';
 
@@ -6,7 +7,8 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const { login, user } = useAuth();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,6 +18,15 @@ export default function LoginPage() {
       const success = await login(email, password);
       if (!success) {
         setError('Invalid email or password');
+      } else {
+        // Redirect based on user role
+        if (user?.role === 'manager') {
+          navigate('/manager');
+        } else if (user?.role === 'staff') {
+          navigate('/staff');
+        } else {
+          navigate('/');
+        }
       }
     } catch (err) {
       setError('An error occurred during login');

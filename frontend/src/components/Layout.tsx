@@ -1,7 +1,6 @@
 import React from 'react';
 import { Menu, Store, Users, ShoppingCart, CreditCard, BarChart3, LogOut } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useAuth } from '../contexts/AuthContext'; // Import useAuth
 
 interface LayoutProps {
@@ -11,7 +10,6 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
-  const navigate = useNavigate(); // Initialize useNavigate
   const { user, logout } = useAuth(); // Get user and logout method from AuthContext
 
   const navigation = [
@@ -24,7 +22,6 @@ export default function Layout({ children }: LayoutProps) {
 
   const handleLogout = () => {
     logout(); // Call logout method
-    navigate('/login'); // Redirect to login page
   };
 
   return (
