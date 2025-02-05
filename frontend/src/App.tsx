@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import Routes and Route
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import Router, Routes, and Route
 import { useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout';
 import LoginPage from './components/auth/LoginPage';

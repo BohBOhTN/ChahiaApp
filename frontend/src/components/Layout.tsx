@@ -12,7 +12,7 @@ export default function Layout({ children }: LayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
   const navigate = useNavigate(); // Initialize useNavigate
-  const { logout } = useAuth(); // Get logout method from AuthContext
+  const { user, logout } = useAuth(); // Get user and logout method from AuthContext
 
   const navigation = [
     { name: 'Dashboard', icon: BarChart3, id: 'dashboard' },
@@ -84,7 +84,7 @@ export default function Layout({ children }: LayoutProps) {
               </button>
             )}
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-500">Welcome back, Admin</span>
+              <span className="text-sm text-gray-500">Welcome back, {user?.name}</span>
             </div>
           </div>
         </header>
