@@ -32,7 +32,8 @@ export default function SalesInterface() {
           avgBuyPrice: parseFloat(product.avg_buy_price),
           sellPrice: parseFloat(product.sell_price),
           isPrePacked: false, // Assuming all products are not pre-packed
-          packageSize: 0 // Assuming no package size for simplicity
+          packageSize: 0, // Assuming no package size for simplicity
+          imageUrl: product.image_url || 'https://static.vecteezy.com/system/resources/previews/007/451/786/non_2x/an-outline-isometric-icon-of-unknown-product-vector.jpg' // Fallback image URL
         }));
         setProducts(fetchedProducts);
       })
@@ -154,7 +155,7 @@ export default function SalesInterface() {
           {filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+              className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer relative"
               onClick={() => handleProductClick(product)}
             >
               <div className="flex justify-between items-start mb-2">
@@ -173,6 +174,7 @@ export default function SalesInterface() {
               <p className="text-sm text-gray-500">
                 Stock: {product.stock} {product.unitType === 'weight' ? 'kg' : 'pcs'}
               </p>
+              <img src={product.imageUrl} alt={product.name} className="w-16 h-16 object-cover absolute bottom-2 right-2" />
             </div>
           ))}
         </div>
