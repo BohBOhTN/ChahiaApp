@@ -1,7 +1,8 @@
+require('dotenv').config(); // Load environment variables at the top
+
 const express = require('express');
 const app = express();
 const port = 3000;
-require('dotenv').config(); // Load environment variables
 const sequelize = require('./config/database'); // Updated to use the new database configuration
 
 app.use(express.json());
@@ -51,6 +52,7 @@ app.use('/payment_history', paymentHistoryRoutes);
 app.use('/expense_categories', expenseCategoryRoutes);
 app.use('/expenses', expenseRoutes);
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
