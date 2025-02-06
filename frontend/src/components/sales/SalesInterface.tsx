@@ -19,6 +19,7 @@ export default function SalesInterface() {
   const [showWeightInput, setShowWeightInput] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
 
   useEffect(() => {
     axios.get('http://localhost:3000/products')
@@ -33,12 +34,27 @@ export default function SalesInterface() {
           sellPrice: parseFloat(product.sell_price),
           isPrePacked: false, // Assuming all products are not pre-packed
           packageSize: 0, // Assuming no package size for simplicity
-          imageUrl: product.image_url || 'https://static.vecteezy.com/system/resources/previews/007/451/786/non_2x/an-outline-isometric-icon-of-unknown-product-vector.jpg' // Fallback image URL
+          imageUrl: product.product_image_link || 'https://static.vecteezy.com/system/resources/previews/007/451/786/non_2x/an-outline-isometric-icon-of-unknown-product-vector.jpg' // Fallback image URL
         }));
         setProducts(fetchedProducts);
       })
       .catch(error => {
         console.error('Error fetching products:', error);
+      });
+
+    axios.get('http://127.0.0.1:3000/clients/')
+      .then(response => {
+        const fetchedClients = response.data.map((client: any) => ({
+          id: client.client_id,
+          name: client.name,
+          contact: client.contact,
+          businessType: client.business_type,
+          createdAt: client.created_at
+        }));
+        setClients(fetchedClients);
+      })
+      .catch(error => {
+        console.error('Error fetching clients:', error);
       });
   }, []);
 
@@ -349,7 +365,7 @@ export default function SalesInterface() {
               </button>
             </div>
             <div className="space-y-2">
-              {mockClients.map((client) => (
+              {clients.map((client) => (
                 <div
                   key={client.id}
                   className="p-3 border rounded-lg cursor-pointer hover:bg-gray-50"
