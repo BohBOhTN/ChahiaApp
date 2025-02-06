@@ -41,6 +41,9 @@ const creditPaymentRoutes = require('./routes/credit_payments');
 const paymentHistoryRoutes = require('./routes/payment_history');
 const expenseCategoryRoutes = require('./routes/expense_categories');
 const expenseRoutes = require('./routes/expenses');
+const loyaltyProgramRoutes = require('./routes/loyalty_programs');
+const clientLoyaltyRoutes = require('./routes/client_loyalty');
+const loyaltyTransactionRoutes = require('./routes/loyalty_transactions');
 
 // Use routes
 app.use('/users', userRoutes);
@@ -53,6 +56,9 @@ app.use('/credit_payments', creditPaymentRoutes);
 app.use('/payment_history', paymentHistoryRoutes);
 app.use('/expense_categories', expenseCategoryRoutes);
 app.use('/expenses', expenseRoutes);
+app.use('/loyalty_programs', loyaltyProgramRoutes);
+app.use('/client_loyalty', clientLoyaltyRoutes);
+app.use('/loyalty_transactions', loyaltyTransactionRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
